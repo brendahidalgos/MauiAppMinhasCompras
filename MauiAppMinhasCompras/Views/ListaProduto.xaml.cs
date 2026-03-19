@@ -19,9 +19,10 @@ public partial class ListaProduto : ContentPage
 	protected async override void OnAppearing()
 	{
 		try {
-		List<Produto> tmp = await App.Db.GetAll();
-		tmp.ForEach(i => lista.Add(i));
-	}	catch(Exception ex)
+			lista.Clear();
+            List<Produto> tmp = await App.Db.GetAll();
+			tmp.ForEach(i => lista.Add(i));
+		}catch(Exception ex)
 		{
 			await DisplayAlert("Ops", ex.Message, "OK");
 		}
