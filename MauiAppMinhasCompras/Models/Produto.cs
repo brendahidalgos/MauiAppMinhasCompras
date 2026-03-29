@@ -9,12 +9,13 @@ namespace MauiAppMinhasCompras.Models
 {
     public class Produto
     {
-        String _descricao;
+        String _descricao = string.Empty;
         double _quantidade;
         double _preco;
 
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        public DateTime DataCadastro { get; set; } = DateTime.Today;
         public string Descricao { 
             get => _descricao; 
             set

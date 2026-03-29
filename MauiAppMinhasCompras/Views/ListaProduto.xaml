@@ -1,48 +1,84 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.Views.ListaProduto"
              Title="Minhas Compras">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Relatorio" Clicked="ToolbarItem_Clicked_2"/>
         <ToolbarItem Text="Somar" Clicked="ToolbarItem_Clicked_1"/>
         <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Clicked"/>
-    </ContentPage.ToolbarItems>        
-    
-    <VerticalStackLayout>
-        <SearchBar x:Name="txt_search" 
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*"
+          Padding="10"
+          RowSpacing="10">
+        <SearchBar x:Name="txt_search"
+                   Grid.Row="0"
+                   Margin="0"
+                   HorizontalOptions="Fill"
                    Placeholder="Busca de produtos"
                    TextChanged="txt_search_TextChanged"/>
-        
-        <ListView x:Name="lst_produtos" ItemSelected="lst_produtos_ItemSelected">
-            
-            <ListView.Header>
-                <Grid ColumnDefinitions="*, *, *, *, *">
-                    <Label Grid.Column="0" Text="ID"/>
-                    <Label Grid.Column="1" Text="Descrição"/>
-                    <Label Grid.Column="2" Text="Preço"/>
-                    <Label Grid.Column="3" Text="Quantidade"/>
-                    <Label Grid.Column="4" Text="Total"/>
-                </Grid>                
-            </ListView.Header>
-                
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="Remover" Clicked="MenuItem_Clicked"/>
-                        </ViewCell.ContextActions>
-                        <Grid ColumnDefinitions="*, *, *, *, *">
-                            <Label Grid.Column="0" Text="{Binding Id}"/>
-                            <Label Grid.Column="1" Text="{Binding Descricao}"/>
-                            <Label Grid.Column="2" Text="{Binding Preco}"/>
-                            <Label Grid.Column="3" Text="{Binding Quantidade}"/>
-                            <Label Grid.Column="4" Text="{Binding Total}"/>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            
-        </ListView>
-    </VerticalStackLayout>
+        <Frame Grid.Row="1"
+               Padding="0"
+               Margin="0"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand">
+            <ListView x:Name="lst_produtos"
+                      HorizontalOptions="FillAndExpand"
+                      VerticalOptions="FillAndExpand"
+                      HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      Refreshing="lst_produtos_Refreshing"
+                      ItemSelected="lst_produtos_ItemSelected"
+                      BackgroundColor="White">
+
+                <ListView.Header>
+                    <Grid ColumnDefinitions="0.7*, 2.2*, 1.4*, 1*, 1.5*, 1.8*"
+                          ColumnSpacing="1"
+                          RowSpacing="1"
+                          Padding="1"
+                          BackgroundColor="{StaticResource Gray300}">
+                        <Label Grid.Column="0" Text="ID" Padding="6,8" FontAttributes="Bold" BackgroundColor="{StaticResource Gray100}" LineBreakMode="NoWrap"/>
+                        <Label Grid.Column="1" Text="Descricao" Padding="6,8" FontAttributes="Bold" BackgroundColor="{StaticResource Gray100}" LineBreakMode="NoWrap"/>
+                        <Label Grid.Column="2" Text="Preco" Padding="6,8" FontAttributes="Bold" BackgroundColor="{StaticResource Gray100}" LineBreakMode="NoWrap"/>
+                        <Label Grid.Column="3" Text="Qtd" Padding="6,8" FontAttributes="Bold" BackgroundColor="{StaticResource Gray100}" HorizontalTextAlignment="Center" LineBreakMode="NoWrap"/>
+                        <Label Grid.Column="4" Text="Total" Padding="6,8" FontAttributes="Bold" BackgroundColor="{StaticResource Gray100}" LineBreakMode="NoWrap"/>
+                        <Label Grid.Column="5" Text="Data" Padding="6,8" FontAttributes="Bold" BackgroundColor="{StaticResource Gray100}" LineBreakMode="NoWrap"/>
+                    </Grid>
+                </ListView.Header>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Remover" Clicked="MenuItem_Clicked"/>
+                            </ViewCell.ContextActions>
+                            <Grid ColumnDefinitions="0.7*, 2.2*, 1.4*, 1*, 1.5*, 1.8*"
+                                  ColumnSpacing="1"
+                                  RowSpacing="1"
+                                  Padding="1"
+                                  BackgroundColor="{StaticResource Gray300}">
+                                <Label Grid.Column="0" Text="{Binding Id}" Padding="6,8" BackgroundColor="White" LineBreakMode="NoWrap"/>
+                                <Label Grid.Column="1" Text="{Binding Descricao}" Padding="6,8" BackgroundColor="White" LineBreakMode="WordWrap"/>
+                                <Label Grid.Column="2" Text="{Binding Preco, StringFormat='{}{0:C}'}" Padding="6,8" BackgroundColor="White" LineBreakMode="NoWrap"/>
+                                <Label Grid.Column="3" Text="{Binding Quantidade}" Padding="6,8" BackgroundColor="White" HorizontalTextAlignment="Center" LineBreakMode="NoWrap"/>
+                                <Label Grid.Column="4" Text="{Binding Total, StringFormat='{}{0:C}'}" Padding="6,8" BackgroundColor="White" LineBreakMode="NoWrap"/>
+                                <Label Grid.Column="5" Text="{Binding DataCadastro, StringFormat='{}{0:dd/MM/yyyy}'}" Padding="6,8" BackgroundColor="White" LineBreakMode="NoWrap"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </Frame>
+    </Grid>
 </ContentPage>

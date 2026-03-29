@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppMinhasCompras.Views.Relatorio"
+             Title="Relatorio">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="10">
+            <Label Text="Data inicial"/>
+            <DatePicker x:Name="dtp_data_inicial" Format="dd/MM/yyyy"/>
+
+            <Label Text="Data final"/>
+            <DatePicker x:Name="dtp_data_final" Format="dd/MM/yyyy"/>
+
+            <Button Text="Filtrar" Clicked="Button_Clicked"/>
+
+            <Label x:Name="lbl_resumo"
+                   Text="Selecione um periodo para visualizar as compras."
+                   FontAttributes="Bold"/>
+
+            <Label x:Name="lbl_vazio"
+                   Text="Nenhum produto encontrado no periodo informado."
+                   IsVisible="False"/>
+
+            <VerticalStackLayout x:Name="stack_produtos"
+                                 Spacing="0"
+                                 BindableLayout.ItemsSource="{Binding}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,5"
+                               Padding="10"
+                               BorderColor="{StaticResource Gray300}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Descricao}" FontAttributes="Bold"/>
+                                <Label Text="{Binding DataCadastro, StringFormat='Data: {0:dd/MM/yyyy}'}"/>
+                                <Label Text="{Binding Quantidade, StringFormat='Quantidade: {0}'}"/>
+                                <Label Text="{Binding Preco, StringFormat='Preco unitario: {0:C}'}"/>
+                                <Label Text="{Binding Total, StringFormat='Total: {0:C}'}"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
